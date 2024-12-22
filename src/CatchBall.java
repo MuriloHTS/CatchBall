@@ -31,7 +31,7 @@ public class CatchBall extends JPanel implements ActionListener, KeyListener {
 
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.BOLD, 16));
-        g.drawString("Score: " + pontuacao, 10, 20);
+        g.drawString("Pontuação: " + pontuacao, 10, 20);
     }
 
     @Override
@@ -42,11 +42,21 @@ public class CatchBall extends JPanel implements ActionListener, KeyListener {
             pontuacao++;
             bolaEixoY = 0;
             bolaEixoX = (int) (Math.random() * (getWidth() - diametroDaBola));
+
+            if (pontuacao % 7 == 0) {
+                velocidadeDaBola++;
+            }
         }
 
         if (bolaEixoY > getHeight()) {
             timer.stop();
             JOptionPane.showMessageDialog(this, "Game Over! Pontuação final: " + pontuacao);
+            System.exit(0);
+        }
+
+        if (pontuacao == 30) {
+            timer.stop();
+            JOptionPane.showMessageDialog(this, "Parabéns! Você conseguiu completar o mini game.");
             System.exit(0);
         }
 
@@ -58,11 +68,11 @@ public class CatchBall extends JPanel implements ActionListener, KeyListener {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT && baldeEixoX > 0) {
-            baldeEixoX -= 15;
+            baldeEixoX -= 18;
         }
 
         if (key == KeyEvent.VK_RIGHT && baldeEixoX < getWidth() - larguraDoBalde) {
-            baldeEixoX += 15;
+            baldeEixoX += 18;
         }
 
         repaint();
@@ -80,6 +90,7 @@ public class CatchBall extends JPanel implements ActionListener, KeyListener {
 
         frame.add(game);
         frame.setSize(600, 600);
+        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
